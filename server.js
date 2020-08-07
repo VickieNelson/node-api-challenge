@@ -1,17 +1,30 @@
 const express = require("express");
-const cors = require("cors");
+
 const server = express();
-
-// const projectsRouter = require("./api/projects");
-// const actionsRouter = require("./api/actions");
 server.use(express.json());
-server.use(cors());
 
-// server.use("/api/projects", projectsRouter);
-// server.use("/api/actions", actionsRouter);
+//Projects Router
+const projectsRouter = require("./routes/projectsRouter");
+server.use("/api/projects", logger, projectsRouter);
+
+//Actions Router
+const actionsRouter = require("./routes/actionsRouter");
+server.use("/api/actions", logger, actionsRouter);
 
 server.get("/", (req, res) => {
-  res.send(`<h3>Sprint1: Node API challenge</h3>`);
+  const message = process.env.MESSAGE || "Sprint 4.1";
+  res.status(200).json({ message });
 });
+
+//custom middleware
+
+function logger(req, res, next) {
+  console.log(
+    `[${new Date().toISOString()}] ${req.method} to ${req.url} ${req.get(
+      "Origin"
+    )}`
+  );
+  next();
+}
 
 module.exports = server;
