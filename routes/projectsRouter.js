@@ -9,7 +9,7 @@ const Projects = require("../data/helpers/projectModel");
 
 //Get request done
 router.get("/", (req, res) => {
-  //get request Read
+  //get request
   Projects.get()
     .then((project) => {
       res.status(200).json(project);
@@ -19,6 +19,17 @@ router.get("/", (req, res) => {
       res
         .status(500)
         .json({ message: " There was an error getting the project." });
+    });
+});
+
+router.get("/:id", (req, res) => {
+  Projects.getById(req.params.id)
+    .then((post) => {
+      res.status(200).json(post);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ message: "Project ID could not be found" });
     });
 });
 

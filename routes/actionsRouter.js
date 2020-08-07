@@ -31,6 +31,18 @@ router.post("/projects/:id", validateProjectId, validateAction, (req, res) => {
     });
 });
 
+router.put("/:id", validateProjectId, (req, res) => {
+  const newUpdate = req.body;
+
+  Helper.update(req.params.id, newUpdate)
+    .then((up) => {
+      res.status(200).json(up);
+    })
+    .catch((error) => {
+      res.status(500).json({ message: "We had a problem updating. Try again" });
+    });
+});
+
 router.delete("/:id", (req, res) => {
   Actions.remove(req.params.id)
     .then((count) => {
