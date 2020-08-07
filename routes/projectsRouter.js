@@ -7,7 +7,7 @@ const router = express.Router();
 //import user database and import post database
 const Projects = require("../data/helpers/projectModel");
 
-//Get request done
+//GET router
 router.get("/", (req, res) => {
   //get request
   Projects.get()
